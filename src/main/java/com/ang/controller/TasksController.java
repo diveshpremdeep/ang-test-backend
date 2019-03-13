@@ -21,12 +21,12 @@ public class TasksController {
 
     @RequestMapping(value = "validateBrackets", method = RequestMethod.GET)
     public ResponseEntity<BalanceTestResult> validateBrackets(@RequestParam("input") String input) {
-        final boolean valid = validator.validateBrackets(input);
+        final boolean balanced = validator.validateBrackets(input);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BalanceTestResult.builder()
                         .input(input)
-                        .balanced(valid)
+                        .balanced(balanced)
                         .build());
     }
 }
