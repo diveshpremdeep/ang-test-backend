@@ -2,11 +2,13 @@ package com.ang.util;
 
 import com.google.common.collect.Lists;
 import javafx.util.Pair;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
+@Component
 public final class StringValidator {
     private static final int MIN_STRING_LENGTH = 1;
     private static final int MAX_STRING_LENGTH = 100;
