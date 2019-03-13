@@ -1,5 +1,6 @@
 package com.ang.util;
 
+import com.ang.util.exception.InvalidInputException;
 import com.google.common.collect.Lists;
 import javafx.util.Pair;
 import org.springframework.stereotype.Component;
@@ -25,8 +26,10 @@ public final class StringValidator {
         final String input = Optional.ofNullable(str)
                 .map(String::trim)
                 .filter(x -> x.length() >= MIN_STRING_LENGTH && x.length() <= MAX_STRING_LENGTH)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("Must be between %d and %d chars long", MIN_STRING_LENGTH, MAX_STRING_LENGTH)));
+                .orElseThrow(() -> new InvalidInputException(
+                        str,
+                        String.format("Must be between %d and %d chars long", MIN_STRING_LENGTH, MAX_STRING_LENGTH)
+                ));
 
         final Stack<Character> stack = new Stack<>();
 

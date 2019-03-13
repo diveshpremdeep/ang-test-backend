@@ -1,5 +1,6 @@
 package com.ang.util;
 
+import com.ang.util.exception.InvalidInputException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,17 +41,17 @@ public class StringValidatorTest {
         assertFalse(validator.validateBrackets("[(])"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = InvalidInputException.class)
     public void testValidateBracketsWithNullInput() {
         validator.validateBrackets(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = InvalidInputException.class)
     public void testValidateBracketsWithEmptyInput() {
         validator.validateBrackets("");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = InvalidInputException.class)
     public void testValidateBracketsWithGiganticInput() {
         // Use a string having length > 100 chars.
         // Could probably use a string generator here; keeping things simple for now.

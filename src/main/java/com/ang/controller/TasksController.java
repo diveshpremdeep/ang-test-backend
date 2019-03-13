@@ -1,5 +1,6 @@
 package com.ang.controller;
 
+import com.ang.controller.response.BalanceTestResult;
 import com.ang.util.StringValidator;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,13 @@ public class TasksController {
     }
 
     @RequestMapping(value = "validateBrackets", method = RequestMethod.GET)
-    public ResponseEntity<String> validateBrackets(@RequestParam("input") String input) {
+    public ResponseEntity<BalanceTestResult> validateBrackets(@RequestParam("input") String input) {
         final boolean valid = validator.validateBrackets(input);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(valid ? "All good!" : "Sorry :-(");
+                .body(BalanceTestResult.builder()
+                        .input(input)
+                        .balanced(valid)
+                        .build());
     }
 }
