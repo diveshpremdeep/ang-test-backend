@@ -37,7 +37,7 @@ public class ToDoController {
             .flatMap(this::parseIntOpt)
             .orElseThrow(() -> new InvalidInputException(
                 idStr,
-                "The ID should be a valid number"
+                "The ID should be a valid 32-bit number"
             ));
 
         final ToDoItem item = toDoService.getToDoItem(idInt)

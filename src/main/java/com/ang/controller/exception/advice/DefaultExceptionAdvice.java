@@ -6,6 +6,7 @@ import com.ang.model.ToDoItemErrorDetail;
 import com.ang.model.ToDoItemNotFoundError;
 import com.ang.model.ValidationError;
 import com.ang.util.exception.InvalidInputException;
+import com.google.common.collect.Lists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,13 @@ public class DefaultExceptionAdvice {
             .contentType(MediaType.APPLICATION_JSON)
             .body(ValidationError.builder()
                 .name("ValidationError")
-                .errorDetail(ErrorDetail.builder()
-                    .location("params")
-                    .param("input")
-                    .message(ex.getErrorMessage())
-                    .value(ex.getInput())
-                    .build())
+                .errorDetails(Lists.newArrayList(
+                    ErrorDetail.builder()
+                        .location("params")
+                        .param("input")
+                        .message(ex.getErrorMessage())
+                        .value(ex.getInput())
+                        .build()))
                 .build());
     }
 
