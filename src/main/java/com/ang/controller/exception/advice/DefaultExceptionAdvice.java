@@ -42,4 +42,11 @@ public class DefaultExceptionAdvice {
                 .build());
     }
 
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .contentType(MediaType.TEXT_PLAIN)
+            .body("An unexpected error occurred. Please contact the side administrator for more details.");
+    }
+
 }
