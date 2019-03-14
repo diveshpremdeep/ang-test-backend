@@ -20,8 +20,9 @@ public final class ToDoService {
     // potentially reusing IDs that belonged to deleted todo items.
     private final Random idGenerator = new Random();
 
-    // In an ideal world, such a service would talk to a storage abstraction like a SQL/NoSQL database, but we're
-    // keeping things simple for this demo and using an in-memory map to store to-do items.
+    // In an ideal world, such a service would talk to a persistent store like a SQL/NoSQL database, but
+    // we're keeping things simple for this demo and using an in-memory map to store to-do items.
+    // As a side effect, this implementation will not survive service restarts.
     public final ConcurrentMap<Integer, ToDoItem> todoItems = Maps.newConcurrentMap();
 
     public ToDoItem addToDoItem(String text) {
