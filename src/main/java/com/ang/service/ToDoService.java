@@ -26,6 +26,12 @@ public final class ToDoService {
     // As a side effect, this implementation will not survive service restarts.
     public final ConcurrentMap<Integer, ToDoItem> todoItems = Maps.newConcurrentMap();
 
+    /**
+     * Creates a new todo item.
+     *
+     * @param text The text of the todo item.
+     * @return The new todo item.
+     */
     public ToDoItem addToDoItem(String text) {
         final String itemText = validateAndTrimText(text);
 
@@ -36,10 +42,26 @@ public final class ToDoService {
         return addToDoItem(builder);
     }
 
+    /**
+     * Returns the todo item having a given id.
+     *
+     * @param id The ID of the todo item.
+     *
+     * @return A non-empty {@code Optional} containing the todo item corresponding to the provided id; {@code Optional
+     * .empty()} if no todo item having the provided ID could be found.
+     */
     public Optional<ToDoItem> getToDoItem(int id) {
         return Optional.ofNullable(todoItems.get(id));
     }
 
+    /**
+     *
+     * @param id The ID of the todo item to update.
+     * @param updateReq Encapsulates the details to update.
+     *
+     * @return A non-empty {@code Optional} containing the updated todo item corresponding to the provided id; {@code
+     * Optional.empty()} if no todo item having the provided ID could be found.
+     */
     public Optional<ToDoItem> updateToDoItem(int id, ToDoItemUpdateRequest updateReq) {
         // NOTE - I'm still dubious of the semantics of this method in a multi-threaded setting.
         final Optional<ToDoItem> existing = getToDoItem(id);
