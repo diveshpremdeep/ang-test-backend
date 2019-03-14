@@ -2,6 +2,7 @@ package com.ang.service;
 
 import com.ang.model.ToDoItem;
 import com.ang.model.ToDoItem.ToDoItemBuilder;
+import com.ang.model.ToDoItemUpdateRequest;
 import com.ang.util.exception.InvalidInputException;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Component;
@@ -26,13 +27,7 @@ public final class ToDoService {
     public final ConcurrentMap<Integer, ToDoItem> todoItems = Maps.newConcurrentMap();
 
     public ToDoItem addToDoItem(String text) {
-        final String itemText = Optional.ofNullable(text)
-            .map(String::trim)
-            .filter(x -> x.length() >= MIN_STRING_LENGTH && x.length() <= MAX_STRING_LENGTH)
-            .orElseThrow(() -> new InvalidInputException(
-                text,
-                String.format("Must be between %d and %d chars long", MIN_STRING_LENGTH, MAX_STRING_LENGTH)
-            ));
+        final String itemText = validateAndTrimText(text);
 
         final ToDoItemBuilder builder = ToDoItem.builder()
             .text(itemText)
@@ -43,6 +38,31 @@ public final class ToDoService {
 
     public Optional<ToDoItem> getToDoItem(int id) {
         return Optional.ofNullable(todoItems.get(id));
+    }
+
+    public Optional<ToDoItem> updateToDoItem(int id, ToDoItemUpdateRequest updateReq) {
+        // NOTE - I'm still dubious of the semantics of this method in a multi-threaded setting.
+        final Optional<ToDoItem> existing = getToDoItem(id);
+
+        if (!existing.isPresent()) {
+            return Optional.empty();
+        }
+
+        final String text = validateAndTrimText(updateReq.getText());
+
+        todoItems.replace(
+            id,
+            ToDoItem.builder()
+                .id(id)
+                .text(text)
+                .completed(updateReq.isCompleted())
+                .createdAt(existing.get().getCreatedAt())  // Do we need an "updatedAt" field?
+                .build()
+        );
+
+        // Because a different thread may replace the item before we exit, re-fetch the item from the store before
+        // returning it.
+        return getToDoItem(id);
     }
 
     private ToDoItem addToDoItem(ToDoItemBuilder itemBuilder) {
@@ -59,6 +79,16 @@ public final class ToDoService {
         // Fetch the todo item again to get any recent updates before returning it.
         return todoItems.get(id);
 
+    }
+
+    private String validateAndTrimText(String text) {
+        return Optional.ofNullable(text)
+            .map(String::trim)
+            .filter(x -> x.length() >= MIN_STRING_LENGTH && x.length() <= MAX_STRING_LENGTH)
+            .orElseThrow(() -> new InvalidInputException(
+                text,
+                String.format("Must be between %d and %d chars long", MIN_STRING_LENGTH, MAX_STRING_LENGTH)
+            ));
     }
 
     private int generateId() {
