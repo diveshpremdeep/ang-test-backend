@@ -62,6 +62,6 @@ public final class ToDoService {
     }
 
     private int generateId() {
-        return idGenerator.nextInt();
+        return Math.abs(idGenerator.nextInt());
     }
 }

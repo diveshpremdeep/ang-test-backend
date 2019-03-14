@@ -26,6 +26,7 @@ public class ToDoServiceTest {
         assertEquals("Created todo item has incorrect text!", text, item.getText());
         assertFalse("A new todo item must not be in a completed state!", item.isCompleted());
         assertNotNull("A new todo item muts have a createdAt date!", item.getCreatedAt());
+        assertTrue("A new todo item must have a positive ID!", item.getId() >= 0);
     }
 
     @Test(expected = InvalidInputException.class)
