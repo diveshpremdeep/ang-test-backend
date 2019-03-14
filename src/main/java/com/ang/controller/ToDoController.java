@@ -4,10 +4,13 @@ import com.ang.controller.exception.ToDoItemNotFoundException;
 import com.ang.model.ToDoItem;
 import com.ang.model.ToDoItemAddRequest;
 import com.ang.service.ToDoService;
+import com.ang.util.exception.InvalidInputException;
 import com.google.common.base.Preconditions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo")
@@ -28,11 +31,29 @@ public class ToDoController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ToDoItem> addToDoItem(@PathVariable("id") Integer id) {
-        final ToDoItem item = toDoService.getToDoItem(id).orElseThrow(() -> new ToDoItemNotFoundException(id));
+    public ResponseEntity<ToDoItem> getToDoItem(@PathVariable("id") String idStr) {
+        final int idInt = Optional.ofNullable(idStr)
+            .map(String::trim)
+            .flatMap(this::parseIntOpt)
+            .orElseThrow(() -> new InvalidInputException(
+                idStr,
+                "The ID should be a valid number"
+            ));
+
+        final ToDoItem item = toDoService.getToDoItem(idInt)
+            .orElseThrow(() -> new ToDoItemNotFoundException(idInt));
 
         return ResponseEntity.ok()
             .contentType(MediaType.APPLICATION_JSON)
             .body(item);
+    }
+
+    // Very hacky, but keeping it simple for now.
+    private Optional<Integer> parseIntOpt(String str) {
+        try {
+            return Optional.of(Integer.parseInt(str));
+        } catch (NumberFormatException ex) {
+            return Optional.empty();
+        }
     }
 }
