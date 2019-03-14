@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 @Component
 public final class ToDoService {
     private static final int MIN_STRING_LENGTH = 1;
-    private static final int MAX_STRING_LENGTH = 100;
+    private static final int MAX_STRING_LENGTH = 50;
 
     // We could simply use an incrementing atomic integer for generating sequential IDs, but this prevents us from
     // potentially reusing IDs that belonged to deleted todo items.

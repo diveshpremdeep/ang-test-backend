@@ -4,8 +4,7 @@ import com.ang.util.exception.InvalidInputException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class StringValidatorTest {
 
@@ -44,18 +43,22 @@ public class StringValidatorTest {
     @Test(expected = InvalidInputException.class)
     public void testValidateBracketsWithNullInput() {
         validator.validateBrackets(null);
+        fail("Expected null input to fail validation!");
     }
 
     @Test(expected = InvalidInputException.class)
     public void testValidateBracketsWithEmptyInput() {
         validator.validateBrackets("");
+        fail("Expected empty input to fail validation!");
     }
 
     @Test(expected = InvalidInputException.class)
     public void testValidateBracketsWithGiganticInput() {
         // Use a string having length > 100 chars.
         // Could probably use a string generator here; keeping things simple for now.
-        final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        validator.validateBrackets(alphabet + alphabet + alphabet + alphabet);
+        final String input = "abcdefghijklmnopqrstuvwxyz";
+        validator.validateBrackets(input + input + input + input);
+
+        fail("Expected gigantic input to fail validation!");
     }
 }
