@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -31,13 +33,13 @@ public class ToDoServiceTest {
 
     @Test(expected = InvalidInputException.class)
     public void testAddToDoItemWithNullInput() {
-        final ToDoItem item = toDoService.addToDoItem(null);
+        toDoService.addToDoItem(null);
         fail("Expected null input to fail validation!");
     }
 
     @Test(expected = InvalidInputException.class)
     public void testAddToDoItemWithEmptyInput() {
-        final ToDoItem item = toDoService.addToDoItem("");
+        toDoService.addToDoItem("");
         fail("Expected empty input to fail validation!");
     }
 
@@ -49,5 +51,21 @@ public class ToDoServiceTest {
         toDoService.addToDoItem(input + input);
 
         fail("Expected gigantic input to fail validation!");
+    }
+
+    @Test
+    public void testGetToDoItem() {
+        final String text = "Call Mom!";
+
+        final int id = toDoService.addToDoItem(text).getId();
+
+        final Optional<ToDoItem> item = toDoService.getToDoItem(id);
+        assertTrue("Expected to retrieve a todo item", item.isPresent());
+    }
+
+    @Test
+    public void testGetToDoItemWithNonExistentId() {
+        final Optional<ToDoItem> item = toDoService.getToDoItem(-1);
+        assertFalse("Did not expect a todo item", item.isPresent());
     }
 }
