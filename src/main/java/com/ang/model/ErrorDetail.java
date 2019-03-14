@@ -1,4 +1,4 @@
-package com.ang.controller.response;
+package com.ang.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

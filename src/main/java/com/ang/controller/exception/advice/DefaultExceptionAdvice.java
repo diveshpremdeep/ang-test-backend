@@ -1,7 +1,7 @@
 package com.ang.controller.exception.advice;
 
-import com.ang.controller.response.ErrorDetail;
-import com.ang.controller.response.ValidationError;
+import com.ang.model.ErrorDetail;
+import com.ang.model.ValidationError;
 import com.ang.util.exception.InvalidInputException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

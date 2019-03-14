@@ -1,4 +1,4 @@
-package com.ang.controller.response;
+package com.ang.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @Builder
-public class BalanceTestResult {
+public class ValidationError {
 
-    private final String input;
+    @JsonProperty("details")
+    private final ErrorDetail errorDetail;
 
-    @JsonProperty("isBalanced")
-    private final boolean balanced;
+    private final String name;
 
 }

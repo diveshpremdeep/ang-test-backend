@@ -1,6 +1,6 @@
 package com.ang.controller;
 
-import com.ang.controller.response.BalanceTestResult;
+import com.ang.model.BalanceTestResult;
 import com.ang.util.StringValidator;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
