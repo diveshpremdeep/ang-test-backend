@@ -41,6 +41,10 @@ public final class ToDoService {
         return addToDoItem(builder);
     }
 
+    public Optional<ToDoItem> getToDoItem(int id) {
+        return Optional.ofNullable(todoItems.get(id));
+    }
+
     private ToDoItem addToDoItem(ToDoItemBuilder itemBuilder) {
         final int id = generateId();
         final ToDoItem item = itemBuilder.id(id).build();
