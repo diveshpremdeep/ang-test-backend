@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -13,7 +15,7 @@ import lombok.Setter;
 public class ToDoItemNotFoundError {
 
     @JsonProperty("details")
-    private final ToDoItemErrorDetail errorDetail;
+    private final List<ToDoItemErrorDetail> errorDetails;
 
     private final String name;
 

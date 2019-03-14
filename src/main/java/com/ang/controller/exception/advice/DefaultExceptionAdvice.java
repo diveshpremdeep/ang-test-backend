@@ -38,9 +38,10 @@ public class DefaultExceptionAdvice {
             .contentType(MediaType.APPLICATION_JSON)
             .body(ToDoItemNotFoundError.builder()
                 .name("NotFoundError")
-                .errorDetail(ToDoItemErrorDetail.builder()
-                    .message(String.format("Item with ID %d not found", ex.getId()))
-                    .build())
+                .errorDetails(Lists.newArrayList(
+                    ToDoItemErrorDetail.builder()
+                        .message(String.format("Item with ID %d not found", ex.getId()))
+                        .build()))
                 .build());
     }
 
