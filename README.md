@@ -21,8 +21,7 @@ Contains code for the back end test as described at https://join.autogeneral.com
 * `PATCH /todo/{id}` - Updates a todo item having a given ID.   
 
 ## Implementation assumptions
-1. Todo item IDs are 32-bit integers. Any non-integer value or a value bigger than the maximum value of a 32-bit 
-integer is considered invalid.
+1. Todo item IDs are positive 32-bit integers. Any other value is considered invalid.
 2. Newly created todo items are stored in an in-memory map for ease of implementation.
 3. Instead of `ToDoValidationError`, I've used a generic `ValidationError` class to describe any input validation 
 errors (empty input or input that does not confirm to the minimum / maximum size).
