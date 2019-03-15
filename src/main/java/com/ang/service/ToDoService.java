@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public final class ToDoService {
+    // These properties could be configured as application properties.
     private static final int MIN_STRING_LENGTH = 1;
     private static final int MAX_STRING_LENGTH = 50;
 

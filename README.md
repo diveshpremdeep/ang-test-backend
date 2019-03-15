@@ -28,6 +28,7 @@ errors (empty input or input that does not confirm to the minimum / maximum size
 
 ## What could have been done better
 1. The service layer of the application could be abstracted behind an interface.
+2. The minimum and maximum size of valid input could be configured as application properties.
 
 ## Miscellaneous notes
 1. I've used [Project Lombok](https://projectlombok.org/) to automatically generate getters, setters, constructors, 

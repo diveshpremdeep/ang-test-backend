@@ -11,8 +11,10 @@ import java.util.Stack;
 
 @Component
 public final class StringValidator {
+    // These properties could be configured as application properties.
     private static final int MIN_STRING_LENGTH = 1;
     private static final int MAX_STRING_LENGTH = 100;
+
     private static final List<Pair<Character, Character>> brackets = Lists.newArrayList(
             new Pair<>('{', '}'),
             new Pair<>('[', ']'),
