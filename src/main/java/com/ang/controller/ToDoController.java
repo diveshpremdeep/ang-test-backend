@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 @RestController
@@ -23,10 +25,10 @@ public class ToDoController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ToDoItem> addToDoItem(@RequestBody ToDoItemAddRequest request) {
+    public ResponseEntity<ToDoItem> addToDoItem(@RequestBody ToDoItemAddRequest request) throws URISyntaxException {
         final ToDoItem item = toDoService.addToDoItem(request.getText());
 
-        return ResponseEntity.ok()
+        return ResponseEntity.created(new URI("/todo/" + item.getId()))
             .contentType(MediaType.APPLICATION_JSON)
             .body(item);
     }
