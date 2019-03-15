@@ -34,8 +34,6 @@ errors (empty input or input that does not confirm to the minimum / maximum size
 1. I've used [Project Lombok](https://projectlombok.org/) to automatically generate getters, setters, constructors, 
 `toString()` and `hashCode()` implementations of the model classes.
 
- 
-
 ## Lessons learnt
 1. Writing code that works in a multi-threaded environment can be tricky to write. I've tried using concurrent data 
 structures and have deliberately avoided the explicit use of `synchronized` methods and blocks.
