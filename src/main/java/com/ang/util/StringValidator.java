@@ -2,7 +2,6 @@ package com.ang.util;
 
 import com.ang.util.exception.InvalidInputException;
 import com.google.common.collect.Lists;
-import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -53,25 +52,25 @@ public final class StringValidator {
     // Checks if a character represents an opening bracket.
     private boolean isOpeningBracket(char c) {
         return brackets.stream()
-                .map(Pair::getKey)
+                .map(Pair::getLeft)
                 .anyMatch(x -> x == c);
     }
 
     // Checks if a character represents a closing bracket.
     private boolean isClosingBracket(char c) {
         return brackets.stream()
-                .map(Pair::getValue)
+                .map(Pair::getRight)
                 .anyMatch(x -> x == c);
     }
 
     // Returns the opening bracket for a given closing bracket.
     private char openingBracket(char c) {
         return brackets.stream()
-                .filter(x -> x.getValue() == c)
+                .filter(x -> x.getRight() == c)
                 .findFirst()
                 .get()  // Normally unsafe, but because this method is private, we assume that
                         // 'c' is a valid closing bracket.
-                .getKey();
+                .getLeft();
     }
 
 }
